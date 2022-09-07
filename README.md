@@ -2,7 +2,7 @@
 
 Share you journeys
 
-Based on ResoCoder Clean Architecture
+Based on ResoCoder Clean Architecture (without unit tests, yet..)
 
 ## Getting Started
 
