@@ -2,6 +2,8 @@
 
 Share you journeys
 
+Based on ResoCoder Clean Architecture
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
