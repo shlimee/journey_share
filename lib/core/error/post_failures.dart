@@ -10,11 +10,3 @@ class PostFailure extends Failure {
   // TODO: implement props
   List<Object?> get props => [message];
 }
-
-class DidNotFound extends Failure {
-  const DidNotFound() : super(message: 'Could not find posts!');
-
-  @override
-  // TODO: implement props
-  List<Object?> get props => [];
-}

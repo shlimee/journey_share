@@ -30,7 +30,7 @@ class FeedPost extends StatelessWidget {
                 Icon(Icons.person),
                 Text(
                   user.userName,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontFamily: 'Poppins',
                       fontSize: 14,
                       fontWeight: FontWeight.bold),
@@ -58,9 +58,12 @@ class FeedPost extends StatelessWidget {
                 style: TextStyles.h4,
               ),
               const SizedBox(width: 15),
-              Text(
-                description,
-                textAlign: TextAlign.start,
+              Flexible(
+                child: Text(
+                  description,
+                  textAlign: TextAlign.start,
+                  overflow: TextOverflow.fade,
+                ),
               )
             ],
           )
