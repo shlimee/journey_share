@@ -46,4 +46,14 @@ void checkError(http.Response response) {
   }
 }
 
-class Api {}
+class Api {
+  final String endpointUrl;
+
+  Api({required this.endpointUrl});
+
+  Future<http.Response> post() {}
+  Future<http.Response> get() {}
+  Future<http.Response> put() {}
+  Future<http.Response> patch() {}
+  Future<http.Response> delete() {}
+}

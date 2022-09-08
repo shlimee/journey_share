@@ -25,6 +25,7 @@ class FeedScreen extends StatelessWidget {
         _showRefreshDoneSnackBar(fsContext);
       },
       child: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
           scrollDirection: Axis.vertical,
           child: BlocConsumer<PostBloc, PostState>(
             listener: (context, state) {},

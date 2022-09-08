@@ -27,8 +27,8 @@ class _CheckMarkIndicatorState extends State<CheckmarkRefreshIndicator>
   Widget build(BuildContext context) {
     return CustomRefreshIndicator(
       offsetToArmed: _indicatorSize,
-      onRefresh: () => Future.delayed(const Duration(seconds: 1)),
-      completeStateDuration: const Duration(seconds: 1),
+      onRefresh: () => Future.delayed(const Duration(milliseconds: 599)),
+      completeStateDuration: const Duration(milliseconds: 599),
       onStateChanged: (change) {
         /// set [_renderCompleteState] to true when controller.state become completed
         if (change.didChange(to: IndicatorState.complete)) {
