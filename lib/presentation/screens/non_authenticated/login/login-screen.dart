@@ -5,13 +5,12 @@ import 'package:journey_share/data/repositories/auth_repository_impl.dart';
 import 'package:journey_share/domain/usecases/login.dart';
 import 'package:journey_share/injection_container.dart';
 import 'package:journey_share/presentation/bloc/auth.bloc.dart';
-import 'package:journey_share/presentation/bloc/event/auth.events.dart';
-import 'package:journey_share/presentation/bloc/state/auth.state.dart';
-import 'package:journey_share/presentation/pages/authenticated/authenticated-screen.dart';
-import 'package:journey_share/presentation/pages/register-screen.dart';
+import 'package:journey_share/presentation/bloc/auth/auth.events.dart';
+import 'package:journey_share/presentation/bloc/auth/auth.state.dart';
+import 'package:journey_share/presentation/screens/non_authenticated/register/register-screen.dart';
 import 'package:journey_share/presentation/widgets/button_with_indicator.dart';
 
-import '../../style/text.styles.dart';
+import '../../../../style/text.styles.dart';
 import 'package:http/http.dart' as http;
 
 class LoginScreen extends StatefulWidget {
@@ -59,11 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: BlocConsumer<AuthBloc, AuthState>(listener: (context, appState) {
         AuthState state = BlocProvider.of<AuthBloc>(context).state;
         if (state is AuthenticatedState) {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (context) => const AuthenticatedScreen(),
-            ),
-          );
+          Navigator.of(context).pushNamedAndRemoveUntil('/feed', (_) => false);
         }
       }, builder: (context, appState) {
         return Column(

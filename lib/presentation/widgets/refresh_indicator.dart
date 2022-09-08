@@ -4,11 +4,11 @@ import 'package:flutter/rendering.dart';
 
 class CheckmarkRefreshIndicator extends StatefulWidget {
   final Widget child;
+  final Function? onLoadedCallback;
 
-  const CheckmarkRefreshIndicator({
-    Key? key,
-    required this.child,
-  }) : super(key: key);
+  const CheckmarkRefreshIndicator(
+      {Key? key, required this.child, this.onLoadedCallback})
+      : super(key: key);
 
   @override
   _CheckMarkIndicatorState createState() => _CheckMarkIndicatorState();
@@ -16,7 +16,7 @@ class CheckmarkRefreshIndicator extends StatefulWidget {
 
 class _CheckMarkIndicatorState extends State<CheckmarkRefreshIndicator>
     with SingleTickerProviderStateMixin {
-  static const _indicatorSize = 150.0;
+  static const _indicatorSize = 110.0;
 
   /// Whether to render check mark instead of spinner
   bool _renderCompleteState = false;
@@ -27,11 +27,12 @@ class _CheckMarkIndicatorState extends State<CheckmarkRefreshIndicator>
   Widget build(BuildContext context) {
     return CustomRefreshIndicator(
       offsetToArmed: _indicatorSize,
-      onRefresh: () => Future.delayed(const Duration(seconds: 2)),
-      completeStateDuration: const Duration(seconds: 2),
+      onRefresh: () => Future.delayed(const Duration(seconds: 1)),
+      completeStateDuration: const Duration(seconds: 1),
       onStateChanged: (change) {
         /// set [_renderCompleteState] to true when controller.state become completed
         if (change.didChange(to: IndicatorState.complete)) {
+          if (widget.onLoadedCallback != null) widget.onLoadedCallback?.call();
           setState(() {
             _renderCompleteState = true;
           });

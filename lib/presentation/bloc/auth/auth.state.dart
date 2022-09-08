@@ -1,5 +1,5 @@
 import 'package:journey_share/domain/entities/token_entity.dart';
-import 'package:journey_share/presentation/bloc/state/states.dart';
+import 'package:journey_share/presentation/bloc/states.dart';
 
 class AuthState extends MyAppState {
   const AuthState();

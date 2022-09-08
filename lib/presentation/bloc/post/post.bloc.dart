@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:journey_share/core/usecase.dart';
 import 'package:journey_share/domain/usecases/get_posts.dart';
-import 'package:journey_share/presentation/bloc/event/post.events.dart';
-import 'package:journey_share/presentation/bloc/state/post.state.dart';
+import 'package:journey_share/presentation/bloc/post/post.events.dart';
+import 'package:journey_share/presentation/bloc/post/post.state.dart';
 
 class PostBloc extends Bloc<PostEvent, PostState> {
   GetPosts getPosts;

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:journey_share/injection_container.dart';
 import 'package:journey_share/presentation/bloc/auth.bloc.dart';
-import 'package:journey_share/presentation/bloc/event/auth.events.dart';
-import 'package:journey_share/presentation/bloc/state/auth.state.dart';
+import 'package:journey_share/presentation/bloc/auth/auth.events.dart';
+import 'package:journey_share/presentation/bloc/auth/auth.state.dart';
 import 'package:journey_share/style/text.styles.dart';
 
 class RegisterScreen extends StatefulWidget {

@@ -12,4 +12,7 @@ class TextStyles {
       fontSize: 19,
       fontFamily: 'Poppins',
       fontWeight: FontWeight.bold);
+
+  static TextStyle h6 = const TextStyle(
+      fontFamily: 'Poppins', fontSize: 14, fontWeight: FontWeight.w600);
 }

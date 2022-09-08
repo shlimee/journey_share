@@ -7,8 +7,8 @@ import 'package:http/http.dart';
 import 'package:journey_share/domain/entities/token_entity.dart';
 import 'dart:async';
 
-import 'package:journey_share/presentation/bloc/event/auth.events.dart';
-import 'package:journey_share/presentation/bloc/state/auth.state.dart';
+import 'package:journey_share/presentation/bloc/auth/auth.events.dart';
+import 'package:journey_share/presentation/bloc/auth/auth.state.dart';
 import 'package:meta/meta.dart';
 
 import '../../domain/usecases/login.dart';

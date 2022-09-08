@@ -1,4 +1,4 @@
-import 'package:journey_share/presentation/bloc/event/events.dart';
+import 'package:journey_share/presentation/bloc/events.dart';
 
 class AuthEvent extends AppEvent {}
 
