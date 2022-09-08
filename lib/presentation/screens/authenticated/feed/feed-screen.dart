@@ -25,7 +25,7 @@ class FeedScreen extends StatelessWidget {
         _showRefreshDoneSnackBar(fsContext);
       },
       child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           scrollDirection: Axis.vertical,
           child: BlocConsumer<PostBloc, PostState>(
             listener: (context, state) {},
@@ -39,7 +39,7 @@ class FeedScreen extends StatelessWidget {
                   ],
                 );
               } else {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               }
             },
           )),

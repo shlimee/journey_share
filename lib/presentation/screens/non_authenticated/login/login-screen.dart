@@ -46,15 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     return Scaffold(
-      bottomSheet: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          Text('made by ❤️ from Hungary'),
-          SizedBox(
-            height: 75,
-          )
-        ],
-      ),
+      bottomSheet: _bottomSheet(),
       body: BlocConsumer<AuthBloc, AuthState>(listener: (context, appState) {
         AuthState state = BlocProvider.of<AuthBloc>(context).state;
         if (state is AuthenticatedState) {
@@ -64,12 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
         return Column(
           children: [
             const SizedBox(height: 196),
-            Center(
-                child: Text(
-              textAlign: TextAlign.center,
-              'JourneyShare',
-              style: TextStyles.title,
-            )),
+            _title(),
             const SizedBox(
               height: 45,
             ),
@@ -85,90 +72,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 35),
                 child: Column(
                   children: [
-                    TextFormField(
-                      controller: userNameController,
-                      autovalidateMode: AutovalidateMode.always,
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.person),
-                        contentPadding:
-                            EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                        enabledBorder: OutlineInputBorder(),
-                        focusedBorder: OutlineInputBorder(),
-                        hintText: 'What is your username?',
-                        labelText: 'Username *',
-                      ),
-                      onSaved: (String? value) {
-                        // This optional block of code can be used to run
-                        // code when the user saves the form.
-                      },
-                      validator: (String? value) {
-                        return (value != null && value.contains('@'))
-                            ? 'Do not use the @ char.'
-                            : null;
-                      },
-                    ),
+                    _usernameField(),
                     const SizedBox(
                       height: 25,
                     ),
-                    TextFormField(
-                      obscureText: true,
-                      autocorrect: false,
-                      enableSuggestions: false,
-                      controller: passwordController,
-                      autovalidateMode: AutovalidateMode.always,
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.key),
-                        contentPadding:
-                            EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                        enabledBorder: OutlineInputBorder(),
-                        focusedBorder: OutlineInputBorder(),
-                        hintText: 'What is your password?',
-                        labelText: 'Password *',
-                      ),
-                      onSaved: (String? value) {
-                        // This optional block of code can be used to run
-                        // code when the user saves the form.
-                      },
-                      validator: (String? value) {
-                        return (value != null && value.contains('@'))
-                            ? 'Do not use the @ char.'
-                            : null;
-                      },
-                    ),
+                    _passwordField(),
                     const SizedBox(
                       height: 25,
                     ),
-                    ButtonWithIndicator(
-                        onSubmit: () {
-                          BlocProvider.of<AuthBloc>(context).add(OnLoginAttempt(
-                              userName: userNameController.value.text,
-                              password: passwordController.value.text));
-                        },
-                        text: const Text('Log in'),
-                        icon: const Icon(Icons.login)),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const RegisterScreen()),
-                        );
-                      },
-                      style: ButtonStyle(
-                          minimumSize: MaterialStateProperty.all<Size>(
-                              const Size.fromHeight(40)),
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.green)),
-                      child: const Text(
-                        'Register',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    const Align(
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                          textAlign: TextAlign.right, "Don't have an account?"),
-                    ),
+                    _loginButton(context),
+                    _registerRedirectButton(context),
+                    _dontYouHaveAnAccount(),
                     if (appState is ErrorState)
                       Align(
                         alignment: Alignment.centerRight,
@@ -184,6 +98,115 @@ class _LoginScreenState extends State<LoginScreen> {
           ],
         );
       }),
+    );
+  }
+
+  Align _dontYouHaveAnAccount() {
+    return const Align(
+      alignment: Alignment.centerRight,
+      child: Text(textAlign: TextAlign.right, "Don't have an account?"),
+    );
+  }
+
+  TextButton _registerRedirectButton(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const RegisterScreen()),
+        );
+      },
+      style: ButtonStyle(
+          minimumSize:
+              MaterialStateProperty.all<Size>(const Size.fromHeight(40)),
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.green)),
+      child: const Text(
+        'Register',
+        style: TextStyle(color: Colors.white),
+      ),
+    );
+  }
+
+  ButtonWithIndicator _loginButton(BuildContext context) {
+    return ButtonWithIndicator(
+        onSubmit: () {
+          BlocProvider.of<AuthBloc>(context).add(OnLoginAttempt(
+              userName: userNameController.value.text,
+              password: passwordController.value.text));
+        },
+        text: const Text('Log in'),
+        icon: const Icon(Icons.login));
+  }
+
+  TextFormField _passwordField() {
+    return TextFormField(
+      obscureText: true,
+      autocorrect: false,
+      enableSuggestions: false,
+      controller: passwordController,
+      autovalidateMode: AutovalidateMode.always,
+      decoration: const InputDecoration(
+        prefixIcon: Icon(Icons.key),
+        contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+        enabledBorder: OutlineInputBorder(),
+        focusedBorder: OutlineInputBorder(),
+        hintText: 'What is your password?',
+        labelText: 'Password *',
+      ),
+      onSaved: (String? value) {
+        // This optional block of code can be used to run
+        // code when the user saves the form.
+      },
+      validator: (String? value) {
+        return (value != null && value.contains('@'))
+            ? 'Do not use the @ char.'
+            : null;
+      },
+    );
+  }
+
+  TextFormField _usernameField() {
+    return TextFormField(
+      controller: userNameController,
+      autovalidateMode: AutovalidateMode.always,
+      decoration: const InputDecoration(
+        prefixIcon: Icon(Icons.person),
+        contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+        enabledBorder: OutlineInputBorder(),
+        focusedBorder: OutlineInputBorder(),
+        hintText: 'What is your username?',
+        labelText: 'Username *',
+      ),
+      onSaved: (String? value) {
+        // This optional block of code can be used to run
+        // code when the user saves the form.
+      },
+      validator: (String? value) {
+        return (value != null && value.contains('@'))
+            ? 'Do not use the @ char.'
+            : null;
+      },
+    );
+  }
+
+  Center _title() {
+    return Center(
+        child: Text(
+      textAlign: TextAlign.center,
+      'JourneyShare',
+      style: TextStyles.title,
+    ));
+  }
+
+  Row _bottomSheet() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: const [
+        Text('made by ❤️ from Hungary'),
+        SizedBox(
+          height: 75,
+        )
+      ],
     );
   }
 
