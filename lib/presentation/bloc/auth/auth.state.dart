@@ -5,8 +5,6 @@ class AuthState extends MyAppState {
   const AuthState();
 }
 
-class EmptyState extends AuthState {}
-
 class AuthenticatedState extends AuthState {
   //final Token token;
   final DecryptedToken token;

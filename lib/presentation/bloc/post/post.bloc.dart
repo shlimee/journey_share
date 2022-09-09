@@ -12,23 +12,18 @@ class PostBloc extends Bloc<PostEvent, PostState> {
 
   PostBloc({required this.getPosts}) : super(EmptyState()) {
     on<OnLoadingPosts>((event, emit) async {
-      print('loading Posts..');
       final postResult = await getPosts.call(NoParams());
       postResult.fold(
         (failure) {
-          print(failure);
           emit(ErrorState(
               errorCode: 414, errorMessage: failure.message.toString()));
         },
         (result) {
-          print("success: " + result.toString());
           emit(LoadedState(fetchedPosts: result));
         },
       );
     });
 
-    on<OnLoaded>((event, emit) {
-      print('loaded Posts!');
-    });
+    on<OnLoaded>((event, emit) {});
   }
 }

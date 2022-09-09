@@ -13,6 +13,9 @@ class RouteGenerator {
       case '/feed':
         return MaterialPageRoute(
             builder: (_) => ScreenWrapper(child: RootScreen()));
+      case '/upload':
+        return MaterialPageRoute(
+            builder: (_) => ScreenWrapper(child: RootScreen()));
 
       default:
         return _errorMessage();

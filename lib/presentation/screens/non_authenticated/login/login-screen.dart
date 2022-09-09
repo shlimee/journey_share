@@ -4,7 +4,7 @@ import 'package:journey_share/data/datasources/auth_remote_data_source.dart';
 import 'package:journey_share/data/repositories/auth_repository_impl.dart';
 import 'package:journey_share/domain/usecases/login.dart';
 import 'package:journey_share/injection_container.dart';
-import 'package:journey_share/presentation/bloc/auth.bloc.dart';
+import 'package:journey_share/presentation/bloc/auth/auth.bloc.dart';
 import 'package:journey_share/presentation/bloc/auth/auth.events.dart';
 import 'package:journey_share/presentation/bloc/auth/auth.state.dart';
 import 'package:journey_share/presentation/screens/non_authenticated/register/register-screen.dart';
@@ -29,14 +29,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-
-    // Start listening to changes.
-    userNameController.addListener(() {
-      debugPrint('username:' + userNameController.text);
-    });
-    passwordController.addListener(() {
-      debugPrint('password:' + passwordController.text);
-    });
   }
 
   @override

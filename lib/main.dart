@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:journey_share/enviroment.dart';
 import 'package:journey_share/injection_container.dart';
-import 'package:journey_share/presentation/bloc/auth.bloc.dart';
+import 'package:journey_share/presentation/bloc/auth/auth.bloc.dart';
 import 'package:journey_share/presentation/bloc/post/post.bloc.dart';
 import 'package:journey_share/presentation/route_generator.dart';
 import 'package:journey_share/presentation/services/navigation_service.dart';

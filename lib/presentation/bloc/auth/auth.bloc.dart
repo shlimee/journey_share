@@ -11,7 +11,7 @@ import 'package:journey_share/presentation/bloc/auth/auth.events.dart';
 import 'package:journey_share/presentation/bloc/auth/auth.state.dart';
 import 'package:meta/meta.dart';
 
-import '../../domain/usecases/login.dart';
+import '../../../domain/usecases/login.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final Login login;
@@ -23,12 +23,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<OnLoginAttempt>((event, emit) async {
       await _onLogin(event, emit);
     });
-    on<AuthEvent>((event, emit) {});
-    on<OnLoginFailed>((event, emit) {});
-    on<OnLoginSuccess>((event, emit) {});
     on<OnRegisterAttempt>((event, emit) async {});
-    on<OnRegisterFailed>((event, emit) {});
-    on<OnRegisterSuccess>((event, emit) {});
   }
 
   _onLogin(dynamic event, Emitter emit) async {

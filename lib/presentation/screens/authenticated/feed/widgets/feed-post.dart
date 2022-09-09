@@ -20,7 +20,6 @@ class FeedPost extends StatelessWidget {
     return Container(
       color: Colors.white,
       width: double.infinity,
-      height: 468,
       child: Column(
         children: [
           _userDetails(),
@@ -53,7 +52,7 @@ class FeedPost extends StatelessWidget {
   GestureDetector _image() {
     return GestureDetector(
       child: Stack(children: [
-        Image.network(url),
+        Container(height: 496, child: Image.network(url, fit: BoxFit.cover)),
         Center(
             child: Icon(
           Icons.favorite,

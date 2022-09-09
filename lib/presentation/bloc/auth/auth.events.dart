@@ -8,14 +8,6 @@ class OnLoginAttempt extends AuthEvent {
   OnLoginAttempt({required this.userName, required this.password});
 }
 
-class OnLoginFailed extends AuthEvent {
-  final String code;
-  final String message;
-  OnLoginFailed({required this.code, required this.message});
-}
-
-class OnLoginSuccess extends AuthEvent {}
-
 class OnRegisterAttempt extends AuthEvent {
   final String email;
   final String userName;
@@ -26,11 +18,3 @@ class OnRegisterAttempt extends AuthEvent {
     required this.password,
   });
 }
-
-class OnRegisterFailed extends AuthEvent {
-  final String code;
-  final String message;
-  OnRegisterFailed({required this.code, required this.message});
-}
-
-class OnRegisterSuccess extends AuthEvent {}
