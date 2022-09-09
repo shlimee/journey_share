@@ -24,11 +24,26 @@ class _UploadContentScreenState extends State<UploadContentScreen> {
             height: 496,
             child: Image.file(imageUploaded!, fit: BoxFit.cover),
           ),
-        OutlinedButton(
-          onPressed: () async {
-            pickImage(ImageSource.gallery);
-          },
-          child: Text('UPLOAD IMAGE'),
+        Row(
+          children: [
+            OutlinedButton(
+              onPressed: () async {
+                pickImage(ImageSource.gallery);
+              },
+              child: Text('SELECT IMAGE'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                pickImage(ImageSource.gallery);
+              },
+              child: Row(
+                children: [
+                  Icon(Icons.publish),
+                  Text('Publish'),
+                ],
+              ),
+            ),
+          ],
         ),
       ],
     )));
