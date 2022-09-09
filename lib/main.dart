@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:journey_share/enviroment.dart';
 import 'package:journey_share/injection_container.dart';
 import 'package:journey_share/presentation/bloc/auth.bloc.dart';
 import 'package:journey_share/presentation/bloc/post/post.bloc.dart';
@@ -10,6 +11,9 @@ import 'injection_container.dart' as di;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
+  String? environment = const String.fromEnvironment('TARGET_ENVIROMENT');
+  Environment().initConfig(environment);
+
   runApp(const MyApp());
 }
 

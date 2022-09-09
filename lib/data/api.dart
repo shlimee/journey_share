@@ -47,13 +47,43 @@ void checkError(http.Response response) {
 }
 
 class Api {
-  final String endpointUrl;
+  final String apiUrl;
 
-  Api({required this.endpointUrl});
+  Api({required this.apiUrl});
 
-  Future<http.Response> post() {}
-  Future<http.Response> get() {}
-  Future<http.Response> put() {}
-  Future<http.Response> patch() {}
-  Future<http.Response> delete() {}
+  Uri assembleUri(String endpoint, [Map<String, dynamic>? queryParameters]) {
+    return Uri.parse(apiUrl + endpoint)
+        .resolveUri(Uri(queryParameters: queryParameters));
+  }
+
+  Future<http.Response> post(
+      {required String endpoint,
+      Map<String, dynamic>? body,
+      Map<String, dynamic>? queryParameters}) {
+    final requestUrl = assembleUri(endpoint, queryParameters);
+
+    return http.post(
+      requestUrl,
+      body: jsonEncode(body),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+  }
+
+  Future<http.Response> get(
+      {required String endpoint, Map<String, dynamic>? queryParameters}) {
+    final requestUrl = assembleUri(endpoint, queryParameters);
+
+    return http.get(
+      requestUrl,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+  }
+
+  //Future<http.Response> put() {}
+  //Future<http.Response> patch() {}
+  //Future<http.Response> delete() {}
 }

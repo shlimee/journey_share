@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:journey_share/data/api.dart';
 import 'package:journey_share/data/models/auth_model.dart';
 import 'package:journey_share/data/models/post_model.dart';
 import 'package:journey_share/domain/entities/post.dart';
@@ -13,13 +14,16 @@ abstract class PostRemoteDataSource {
 }
 
 class PostRemoteDataSourceImpl implements PostRemoteDataSource {
-  final http.Client client;
+  final Api api;
+  final String apiUrl;
 
-  PostRemoteDataSourceImpl({required this.client});
+  PostRemoteDataSourceImpl({required this.apiUrl}) : api = Api(apiUrl: apiUrl);
 
   @override
   Future<List<Post>> getAll() async {
-    final response = await client.get(Uri.http("localhost:3333", "api/post"));
+    //final response = await client.get(Uri.http("localhost:3333", "api/post"));
+    final response =
+        await (Api(apiUrl: "http://localhost:3333/").get(endpoint: "api/post"));
 
     var responseBodyArray = json.decode(response.body);
 

@@ -8,12 +8,14 @@ import 'package:journey_share/domain/repositories/auth_repository.dart';
 import 'package:journey_share/domain/repositories/post_repository.dart';
 import 'package:journey_share/domain/usecases/get_posts.dart';
 import 'package:journey_share/domain/usecases/login.dart';
+import 'package:journey_share/enviroment.dart';
 import 'package:journey_share/presentation/bloc/auth.bloc.dart';
 import 'package:journey_share/presentation/bloc/post/post.bloc.dart';
 import 'package:journey_share/presentation/services/navigation_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;
+final apiUrl = Environment().config!.apiUrl;
 
 Future<void> init() async {
   //! Features - Number Trivia
@@ -47,10 +49,10 @@ Future<void> init() async {
 
   // Data sources
   sl.registerLazySingleton<AuthRemoteDataSource>(
-    () => AuthRemoteDataSourceImpl(client: sl()),
+    () => AuthRemoteDataSourceImpl(apiUrl: apiUrl),
   );
   sl.registerLazySingleton<PostRemoteDataSource>(
-    () => PostRemoteDataSourceImpl(client: sl()),
+    () => PostRemoteDataSourceImpl(apiUrl: apiUrl),
   );
 
   //! Core

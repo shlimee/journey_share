@@ -24,25 +24,30 @@ class FeedScreen extends StatelessWidget {
         BlocProvider.of<PostBloc>(fsContext).add(OnLoadingPosts());
         _showRefreshDoneSnackBar(fsContext);
       },
-      child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          scrollDirection: Axis.vertical,
-          child: BlocConsumer<PostBloc, PostState>(
-            listener: (context, state) {},
-            builder: (context, state) {
-              if (state is LoadedState) {
-                return Column(
-                  children: [
-                    for (var i in (state as LoadedState).fetchedPosts)
-                      FeedPost(
-                          description: i.description, user: i.user, url: i.url)
-                  ],
-                );
-              } else {
-                return const Center(child: CircularProgressIndicator());
-              }
-            },
-          )),
+      child: Container(
+        height: double.infinity,
+        child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            scrollDirection: Axis.vertical,
+            child: BlocConsumer<PostBloc, PostState>(
+              listener: (context, state) {},
+              builder: (context, state) {
+                if (state is LoadedState) {
+                  return Column(
+                    children: [
+                      for (var i in (state as LoadedState).fetchedPosts)
+                        FeedPost(
+                            description: i.description,
+                            user: i.user,
+                            url: i.url)
+                    ],
+                  );
+                } else {
+                  return const Center(child: CircularProgressIndicator());
+                }
+              },
+            )),
+      ),
     );
   }
 
