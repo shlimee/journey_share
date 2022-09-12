@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
+import 'package:http_parser/http_parser.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:path/path.dart';
 
 import 'api_exceptions.dart';
 
@@ -62,13 +65,36 @@ class Api {
       Map<String, dynamic>? queryParameters}) {
     final requestUrl = assembleUri(endpoint, queryParameters);
 
+    final token =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6InRlc3RfdXNlcl8xMjMiLCJpZCI6IjEiLCJlbWFpbCI6ImFzZCIsImlhdCI6MTY2Mjk5MTIxNSwiZXhwIjoxNjYyOTkxMjc1fQ.qhZEsSa6hVwrLXCjWtIVHqjrTNt57iD_QCdceFjKkUM';
+
     return http.post(
       requestUrl,
       body: jsonEncode(body),
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${token}'
       },
     );
+  }
+
+  Future<http.Response> postWithFile(
+      {required String endpoint,
+      required File file,
+      Map<String, String>? body,
+      Map<String, dynamic>? queryParameters}) async {
+    final requestUrl = assembleUri(endpoint, queryParameters);
+
+    final token =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6InRlc3RfdXNlcl8xMjMiLCJpZCI6IjEiLCJlbWFpbCI6ImFzZCIsImlhdCI6MTY2Mjk5MTIxNSwiZXhwIjoxNjYyOTkxMjc1fQ.qhZEsSa6hVwrLXCjWtIVHqjrTNt57iD_QCdceFjKkUM';
+
+    final request = http.MultipartRequest("POST", requestUrl);
+    if (body != null) request.fields.addAll(body);
+    request.headers.addAll({'Authorization': 'Bearer ${token}'});
+    request.files.add(await http.MultipartFile.fromPath('file', file.path,
+        filename: basename(file.path)));
+    final res = await request.send();
+    return http.Response.fromStream(res);
   }
 
   Future<http.Response> get(

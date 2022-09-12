@@ -8,7 +8,12 @@ class ScreenWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       child: Scaffold(
-        appBar: AppBar(title: Text('JourneyShare')),
+        appBar: AppBar(
+          title:
+              const Text('JourneyShare', style: TextStyle(color: Colors.black)),
+          surfaceTintColor: Colors.black,
+          backgroundColor: Colors.white,
+        ),
         body: child,
       ),
     );

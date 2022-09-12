@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:journey_share/core/error/failures.dart';
 import 'package:journey_share/core/error/post_failures.dart';
@@ -15,6 +17,16 @@ class PostRepositoryImpl implements PostRepository {
     try {
       final remoteTrivia = await remoteDataSource.getAll();
       return Right(remoteTrivia);
+    } catch (e) {
+      return Left(PostFailure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Post>> publish(File file, String description) async {
+    try {
+      final response = await remoteDataSource.publish(file, description);
+      return Right(response);
     } catch (e) {
       return Left(PostFailure(message: e.toString()));
     }

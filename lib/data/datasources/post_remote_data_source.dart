@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'package:http/http.dart' as http;
 
 abstract class PostRemoteDataSource {
   Future<List<Post>> getAll();
+  Future<Post> publish(File file, String description);
 }
 
 class PostRemoteDataSourceImpl implements PostRemoteDataSource {
@@ -32,6 +34,20 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
         return PostModel.fromJson(e);
       }).toList();
       return mappedResponse as List<Post>;
+    } else {
+      final error = jsonDecode(response.body);
+      throw Exception(error["message"].toString());
+    }
+  }
+
+  @override
+  Future<Post> publish(File file, String description) async {
+    final body = {'description': description};
+    final response = await (Api(apiUrl: "http://localhost:3333/")
+        .postWithFile(endpoint: "api/post", body: body, file: file));
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return PostModel.fromJson(json.decode(response.body));
     } else {
       final error = jsonDecode(response.body);
       throw Exception(error["message"].toString());

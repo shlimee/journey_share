@@ -8,6 +8,7 @@ import 'package:journey_share/domain/repositories/auth_repository.dart';
 import 'package:journey_share/domain/repositories/post_repository.dart';
 import 'package:journey_share/domain/usecases/get_posts.dart';
 import 'package:journey_share/domain/usecases/login.dart';
+import 'package:journey_share/domain/usecases/publish.dart';
 import 'package:journey_share/enviroment.dart';
 import 'package:journey_share/presentation/bloc/auth/auth.bloc.dart';
 import 'package:journey_share/presentation/bloc/post/post.bloc.dart';
@@ -26,14 +27,13 @@ Future<void> init() async {
     ),
   );
   sl.registerLazySingleton(
-    () => PostBloc(
-      getPosts: sl(),
-    ),
+    () => PostBloc(getPosts: sl(), publish: sl()),
   );
 
   // Use cases
   sl.registerLazySingleton(() => Login(sl()));
   sl.registerLazySingleton(() => GetPosts(sl()));
+  sl.registerLazySingleton(() => Publish(sl()));
 
   // Repository
   sl.registerLazySingleton<AuthRepository>(

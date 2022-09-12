@@ -1,16 +1,20 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:journey_share/core/usecase.dart';
+import 'package:journey_share/domain/entities/post.dart';
 import 'package:journey_share/domain/usecases/get_posts.dart';
+import 'package:journey_share/domain/usecases/publish.dart';
 import 'package:journey_share/presentation/bloc/post/post.events.dart';
 import 'package:journey_share/presentation/bloc/post/post.state.dart';
 
 class PostBloc extends Bloc<PostEvent, PostState> {
-  GetPosts getPosts;
+  final GetPosts getPosts;
+  final Publish publish;
 
   @override
   PostState get initialState => EmptyState();
 
-  PostBloc({required this.getPosts}) : super(EmptyState()) {
+  PostBloc({required this.getPosts, required this.publish})
+      : super(EmptyState()) {
     on<OnLoadingPosts>((event, emit) async {
       final postResult = await getPosts.call(NoParams());
       postResult.fold(
@@ -23,7 +27,21 @@ class PostBloc extends Bloc<PostEvent, PostState> {
         },
       );
     });
-
     on<OnLoaded>((event, emit) {});
+    on<OnCreate>((event, emit) async {
+      print(event);
+      emit(CreateState(imageFile: event.fileToUpload));
+    });
+    on<OnPublish>((event, emit) async {
+      final res = await _publish(event);
+      print(res.toString());
+      print('published');
+    });
+  }
+
+  dynamic _publish(OnPublish event) async {
+    final response = await publish(
+        Params(file: event.fileToPublish, description: event.description));
+    return response;
   }
 }
