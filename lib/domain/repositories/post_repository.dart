@@ -8,4 +8,5 @@ abstract class PostRepository {
   Future<Either<Failure, List<Post>>>
       getPosts(); // TODO: make sure to use some filtering alhorithm
   Future<Either<Failure, Post>> publish(File file, String description);
+  Future<Either<Failure, List<Post>>> getUserPosts(String userId);
 }

@@ -4,8 +4,10 @@ import 'package:journey_share/enviroment.dart';
 import 'package:journey_share/injection_container.dart';
 import 'package:journey_share/presentation/bloc/auth/auth.bloc.dart';
 import 'package:journey_share/presentation/bloc/post/post.bloc.dart';
+import 'package:journey_share/presentation/bloc/user/user.bloc.dart';
 import 'package:journey_share/presentation/route_generator.dart';
 import 'package:journey_share/presentation/services/navigation_service.dart';
+
 import 'injection_container.dart' as di;
 
 void main() async {
@@ -30,6 +32,9 @@ class MyApp extends StatelessWidget {
         BlocProvider<AuthBloc>(
           lazy: true,
           create: (_) => sl<AuthBloc>(),
+        ),
+        BlocProvider<UserBloc>(
+          create: (_) => sl<UserBloc>(),
         ),
       ],
       child: MaterialApp(

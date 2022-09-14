@@ -13,7 +13,7 @@ class RootScreen extends StatelessWidget {
   final List<Widget> _screens = [
     UploadContentScreen(),
     FeedScreen(),
-    const ProfileScreen(),
+    ProfileScreen(),
   ];
 
   @override

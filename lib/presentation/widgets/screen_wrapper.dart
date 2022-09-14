@@ -13,6 +13,7 @@ class ScreenWrapper extends StatelessWidget {
               const Text('JourneyShare', style: TextStyle(color: Colors.black)),
           surfaceTintColor: Colors.black,
           backgroundColor: Colors.white,
+          iconTheme: const IconThemeData(color: Colors.black),
         ),
         body: child,
       ),

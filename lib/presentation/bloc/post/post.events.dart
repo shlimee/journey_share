@@ -4,7 +4,13 @@ import 'package:journey_share/presentation/bloc/events.dart';
 
 class PostEvent extends AppEvent {}
 
-class OnLoadingPosts extends PostEvent {}
+class OnLoadingAllPosts extends PostEvent {}
+
+class OnLoadingUserPosts extends PostEvent {
+  final String userId;
+
+  OnLoadingUserPosts(this.userId);
+}
 
 class OnLoaded extends PostEvent {}
 

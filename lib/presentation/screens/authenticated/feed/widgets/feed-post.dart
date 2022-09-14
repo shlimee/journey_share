@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:journey_share/data/models/user_model.dart';
+import 'package:journey_share/presentation/screens/route_params.dart';
 import 'package:journey_share/style/text.styles.dart';
 
 import '../../../../../domain/entities/user.dart';
@@ -22,7 +22,7 @@ class FeedPost extends StatelessWidget {
       width: double.infinity,
       child: Column(
         children: [
-          _userDetails(),
+          _userDetails(context),
           _image(),
           _actionButtons(),
           _postDescription(),
@@ -31,18 +31,24 @@ class FeedPost extends StatelessWidget {
     );
   }
 
-  Padding _userDetails() {
+  Padding _userDetails(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 5),
+      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 5),
       child: Row(
         children: [
-          Icon(Icons.person),
-          Text(
-            user.userName,
-            style: const TextStyle(
-                fontFamily: 'Poppins',
-                fontSize: 14,
-                fontWeight: FontWeight.w600),
+          const Icon(Icons.person),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context)
+                  .pushNamed('/profile', arguments: RouteParam(arg: user.id));
+            },
+            child: Text(
+              user.userName,
+              style: const TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600),
+            ),
           ),
         ],
       ),

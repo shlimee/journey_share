@@ -1,10 +1,7 @@
-import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:journey_share/injection_container.dart';
-import 'package:journey_share/presentation/bloc/post/post.events.dart';
 import 'package:journey_share/presentation/bloc/post/post.bloc.dart';
+import 'package:journey_share/presentation/bloc/post/post.events.dart';
 import 'package:journey_share/presentation/bloc/post/post.state.dart';
 import 'package:journey_share/presentation/widgets/refresh_indicator.dart';
 
@@ -17,12 +14,11 @@ class FeedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext fsContext) {
-    BlocProvider.of<PostBloc>(fsContext).add(OnLoadingPosts());
+    BlocProvider.of<PostBloc>(fsContext).add(OnLoadingAllPosts());
 
     return CheckmarkRefreshIndicator(
       onLoadedCallback: () {
-        BlocProvider.of<PostBloc>(fsContext).add(OnLoadingPosts());
-        _showRefreshDoneSnackBar(fsContext);
+        BlocProvider.of<PostBloc>(fsContext).add(OnLoadingAllPosts());
       },
       child: Container(
         height: double.infinity,
@@ -53,12 +49,6 @@ class FeedScreen extends StatelessWidget {
 
   ScaffoldFeatureController<SnackBar, SnackBarClosedReason>
       _showRefreshDoneSnackBar(BuildContext fsContext) {
-    final state = BlocProvider.of<PostBloc>(fsContext).state as LoadedState;
-
-    if (oldState != null)
-      print("check if oldstate is newstate: " + (state == oldState).toString());
-    oldState = state;
-
     return ScaffoldMessenger.of(fsContext).showSnackBar(
       SnackBar(
         action: SnackBarAction(

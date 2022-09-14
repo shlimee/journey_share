@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:journey_share/presentation/screens/authenticated/feed/feed-screen.dart';
+import 'package:journey_share/presentation/screens/authenticated/profile/profile-screen.dart';
 import 'package:journey_share/presentation/screens/authenticated/upload/screens/add_details_screen.dart';
 import 'package:journey_share/presentation/screens/non_authenticated/login/login-screen.dart';
 import 'package:journey_share/presentation/screens/root_screen.dart';
+import 'package:journey_share/presentation/screens/route_params.dart';
 import 'package:journey_share/presentation/widgets/screen_wrapper.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
+    final params =
+        settings.arguments != null ? settings.arguments as RouteParam : null;
     switch (settings.name) {
       case '/auth':
         return MaterialPageRoute(
@@ -14,6 +17,13 @@ class RouteGenerator {
       case '/feed':
         return MaterialPageRoute(
             builder: (_) => ScreenWrapper(child: RootScreen()));
+      case '/profile':
+        print("settings: " + params!.arg.toString());
+        return MaterialPageRoute(
+            builder: (_) => ScreenWrapper(
+                    child: ProfileScreen(
+                  userId: params!.arg,
+                )));
       case '/upload':
         return MaterialPageRoute(
             builder: (_) => ScreenWrapper(child: RootScreen()));

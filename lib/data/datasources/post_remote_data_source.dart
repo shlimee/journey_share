@@ -1,18 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 
-import 'package:flutter/material.dart';
 import 'package:journey_share/data/api.dart';
-import 'package:journey_share/data/models/auth_model.dart';
 import 'package:journey_share/data/models/post_model.dart';
 import 'package:journey_share/domain/entities/post.dart';
-import 'package:journey_share/domain/entities/token_entity.dart';
-import 'package:http/http.dart' as http;
 
 abstract class PostRemoteDataSource {
   Future<List<Post>> getAll();
   Future<Post> publish(File file, String description);
+  Future<List<Post>> getUserPosts(String userId);
 }
 
 class PostRemoteDataSourceImpl implements PostRemoteDataSource {
@@ -48,6 +44,24 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       return PostModel.fromJson(json.decode(response.body));
+    } else {
+      final error = jsonDecode(response.body);
+      throw Exception(error["message"].toString());
+    }
+  }
+
+  @override
+  Future<List<Post>> getUserPosts(String userId) async {
+    final response = await (Api(apiUrl: "http://localhost:3333/")
+        .get(endpoint: "api/post/user/" + userId));
+
+    var responseBodyArray = json.decode(response.body);
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      var mappedResponse = responseBodyArray.map<PostModel>((e) {
+        return PostModel.fromJson(e);
+      }).toList();
+      return mappedResponse as List<Post>;
     } else {
       final error = jsonDecode(response.body);
       throw Exception(error["message"].toString());

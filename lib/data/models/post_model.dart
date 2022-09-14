@@ -1,16 +1,17 @@
 import 'package:journey_share/data/models/user_model.dart';
 import 'package:journey_share/domain/entities/post.dart';
-import 'package:journey_share/domain/entities/token_entity.dart';
-import 'package:journey_share/domain/entities/user.dart';
 
 class PostModel extends Post {
   PostModel(
       {required UserModel user,
       required String url,
       required String description,
-      required bool isActive})
+      required bool isPrivate})
       : super(
-            user: user, description: description, isActive: isActive, url: url);
+            user: user,
+            description: description,
+            isPrivate: isPrivate,
+            url: url);
 
   factory PostModel.fromJson(Map<String, dynamic> json) {
     print("json? " + json.toString());
@@ -18,7 +19,7 @@ class PostModel extends Post {
       user: UserModel.fromJson(json['user']),
       url: json['url'],
       description: json['description'],
-      isActive: json['isActive'],
+      isPrivate: json['isPrivate'],
     );
   }
 
@@ -27,7 +28,7 @@ class PostModel extends Post {
       'user': user,
       'url': url,
       'description': description,
-      'isActive': isActive,
+      'isPrivate': isPrivate,
     };
   }
 }
