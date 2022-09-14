@@ -98,13 +98,16 @@ class Api {
   }
 
   Future<http.Response> get(
-      {required String endpoint, Map<String, dynamic>? queryParameters}) {
+      {required String endpoint,
+      Map<String, dynamic>? queryParameters,
+      String? accessToken}) {
     final requestUrl = assembleUri(endpoint, queryParameters);
 
     return http.get(
       requestUrl,
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${accessToken}'
       },
     );
   }

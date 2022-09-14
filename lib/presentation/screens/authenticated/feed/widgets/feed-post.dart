@@ -51,16 +51,16 @@ class FeedPost extends StatelessWidget {
 
   GestureDetector _image() {
     return GestureDetector(
-      child: Stack(children: [
-        Container(height: 496, child: Image.network(url, fit: BoxFit.cover)),
-        Center(
+      onDoubleTap: _doubleTappedImage,
+      child: Stack(alignment: Alignment.center, children: [
+        SizedBox(height: 496, child: Image.network(url, fit: BoxFit.cover)),
+        const Center(
             child: Icon(
           Icons.favorite,
           size: 96,
           color: Colors.white70,
         ))
-      ], alignment: Alignment.center),
-      onDoubleTap: _doubleTappedImage,
+      ]),
     );
   }
 

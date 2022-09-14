@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:journey_share/injection_container.dart';
 import 'package:journey_share/presentation/bloc/auth/auth.bloc.dart';
+import 'package:journey_share/presentation/bloc/auth/auth.events.dart';
 import 'package:journey_share/presentation/bloc/auth/auth.state.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -15,16 +16,24 @@ class ProfileScreen extends StatelessWidget {
         children: [
           _profileIcon(),
           _userName(state),
+          OutlinedButton(
+            onPressed: () async {
+              BlocProvider.of<AuthBloc>(context).add(OnLogoutAttempt());
+              await Navigator.of(context)
+                  .pushNamedAndRemoveUntil('/auth', (_) => false);
+            },
+            child: Text('Logout'),
+          )
         ],
       ),
     );
   }
 
   Text _userName(Object? state) {
-    return Text((state as AuthenticatedState)
-        .token
-        .decryptedObject['userName']
-        .toString());
+    if (state is AuthenticatedState)
+      return Text((state as AuthenticatedState).user.userName.toString());
+    else
+      return Text('ERROR');
   }
 
   Padding _profileIcon() {

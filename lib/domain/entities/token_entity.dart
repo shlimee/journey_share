@@ -10,19 +10,3 @@ class Token extends Equatable {
   // TODO: implement props
   List<Object?> get props => [accessToken];
 }
-
-class DecryptedToken extends Equatable {
-  Map<String, dynamic> decryptedObject;
-
-  DecryptedToken({required this.decryptedObject});
-
-  static DecryptedToken decryptToken(Token token) {
-    Map<String, dynamic> parsed = Jwt.parseJwt(token.accessToken);
-
-    return DecryptedToken(decryptedObject: parsed);
-  }
-
-  @override
-  // TODO: implement props
-  List<Object?> get props => [decryptedObject];
-}

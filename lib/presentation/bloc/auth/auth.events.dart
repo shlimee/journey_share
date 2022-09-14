@@ -8,6 +8,8 @@ class OnLoginAttempt extends AuthEvent {
   OnLoginAttempt({required this.userName, required this.password});
 }
 
+class OnLogoutAttempt extends AuthEvent {}
+
 class OnRegisterAttempt extends AuthEvent {
   final String email;
   final String userName;

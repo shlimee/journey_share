@@ -3,7 +3,7 @@ import 'package:journey_share/config/enviroments/base_enviroment_config.dart';
 class DevEnviromentConfig extends BaseEnviromentConfig {
   @override
   // TODO: implement apiUrl
-  String get apiUrl => "http://localhost:3333/";
+  String get apiUrl => "http://localhost:3333/api/";
 
   @override
   // TODO: implement appName

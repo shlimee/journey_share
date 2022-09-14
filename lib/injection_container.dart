@@ -8,6 +8,7 @@ import 'package:journey_share/domain/repositories/auth_repository.dart';
 import 'package:journey_share/domain/repositories/post_repository.dart';
 import 'package:journey_share/domain/usecases/get_posts.dart';
 import 'package:journey_share/domain/usecases/login.dart';
+import 'package:journey_share/domain/usecases/logout.dart';
 import 'package:journey_share/domain/usecases/publish.dart';
 import 'package:journey_share/enviroment.dart';
 import 'package:journey_share/presentation/bloc/auth/auth.bloc.dart';
@@ -22,9 +23,7 @@ Future<void> init() async {
   //! Features - Number Trivia
   // Bloc
   sl.registerLazySingleton(
-    () => AuthBloc(
-      login: sl(),
-    ),
+    () => AuthBloc(login: sl(), logout: sl()),
   );
   sl.registerLazySingleton(
     () => PostBloc(getPosts: sl(), publish: sl()),
@@ -32,6 +31,7 @@ Future<void> init() async {
 
   // Use cases
   sl.registerLazySingleton(() => Login(sl()));
+  sl.registerLazySingleton(() => Logout(sl()));
   sl.registerLazySingleton(() => GetPosts(sl()));
   sl.registerLazySingleton(() => Publish(sl()));
 

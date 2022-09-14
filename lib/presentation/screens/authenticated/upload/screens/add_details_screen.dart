@@ -36,7 +36,25 @@ class AddDetailsScreen extends StatelessWidget {
               prefixIcon: Icon(Icons.key),
               contentPadding:
                   EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-              enabledBorder: OutlineInputBorder(),
+              enabledBorder: UnderlineInputBorder(),
+              focusedBorder: UnderlineInputBorder(),
+              labelText: 'Description',
+              hintText: 'It was a fantastic journey..',
+            ),
+            onSaved: (String? value) {
+              // This optional block of code can be used to run
+              // code when the user saves the form.
+            },
+          ),
+          TextFormField(
+            autocorrect: false,
+            enableSuggestions: false,
+            autovalidateMode: AutovalidateMode.always,
+            decoration: const InputDecoration(
+              prefixIcon: Icon(Icons.key),
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+              enabledBorder: UnderlineInputBorder(),
               focusedBorder: UnderlineInputBorder(),
               labelText: 'Description',
               hintText: 'It was a fantastic journey..',
