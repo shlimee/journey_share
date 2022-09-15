@@ -5,7 +5,7 @@ class UserState extends MyAppState {
   const UserState();
 }
 
-class EmptyState extends UserState {}
+class EmptyUserState extends UserState {}
 
 class UserLoading extends UserState {}
 

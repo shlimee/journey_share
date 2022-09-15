@@ -10,8 +10,6 @@ import 'widgets/feed-post.dart';
 class FeedScreen extends StatelessWidget {
   FeedScreen({Key? key}) : super(key: key);
 
-  late PostState oldState = EmptyState();
-
   @override
   Widget build(BuildContext fsContext) {
     BlocProvider.of<PostBloc>(fsContext).add(OnLoadingAllPosts());
@@ -31,7 +29,7 @@ class FeedScreen extends StatelessWidget {
                 if (state is LoadedState) {
                   return Column(
                     children: [
-                      for (var i in (state as LoadedState).fetchedPosts)
+                      for (var i in (state).fetchedPosts)
                         FeedPost(
                             description: i.description,
                             user: i.user,

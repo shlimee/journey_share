@@ -5,16 +5,16 @@ import 'package:journey_share/presentation/bloc/user/user.state.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
   final GetUser getUser;
-  UserState get initialState => EmptyState();
+  UserState get initialState => EmptyUserState();
 
-  UserBloc({required this.getUser}) : super(EmptyState()) {
+  UserBloc({required this.getUser}) : super(EmptyUserState()) {
     on<FetchUser>(
       (FetchUser event, emit) async {
         final result = await getUser(GetUserParams(userId: event.userId));
 
         return result.fold((l) {
           print(l.toString());
-          return UserError(
+          return const UserError(
               errorCode: 414, errorMessage: 'error fetching user!');
         }, (r) {
           print('user loaded');

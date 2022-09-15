@@ -25,7 +25,6 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       },
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
-      print(jsonDecode(response.body));
       return UserModel.fromJson(jsonDecode(response.body));
     } else {
       final error = jsonDecode(response.body);

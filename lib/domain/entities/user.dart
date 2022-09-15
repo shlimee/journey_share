@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:journey_share/domain/entities/base_entity.dart';
-import 'package:meta/meta.dart';
+import 'package:journey_share/domain/entities/post.dart';
 
 class User extends Equatable with BaseEntity {
   final String id;
