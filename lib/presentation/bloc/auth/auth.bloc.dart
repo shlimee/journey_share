@@ -29,7 +29,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         .call(Params(userName: event.userName, password: event.password));
     loginResult.fold(
       (failure) {
-        emit(ErrorState(
+        emit(AuthErrorState(
             errorCode: 414, errorMessage: failure.message.toString()));
       },
       (user) {
@@ -43,7 +43,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     logoutResult.fold(
       (failure) {
-        emit(ErrorState(
+        emit(AuthErrorState(
             errorCode: 414, errorMessage: failure.message.toString()));
       },
       (res) {

@@ -20,11 +20,21 @@ class LoadedState extends PostState {
   List<Object?> get props => [fetchedPosts];
 }
 
-class ErrorState extends PostState {
+class LoadedUserPostsState extends PostState {
+  final String userId;
+  final List<Post> fetchedPosts;
+  const LoadedUserPostsState(
+      {required this.fetchedPosts, required this.userId});
+
+  @override
+  List<Object?> get props => [fetchedPosts];
+}
+
+class PostErrorState extends PostState {
   final int? errorCode;
   final String? errorMessage;
 
-  ErrorState({this.errorCode, this.errorMessage});
+  PostErrorState({this.errorCode, this.errorMessage});
 }
 
 class CreateState extends PostState {

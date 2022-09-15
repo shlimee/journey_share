@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:journey_share/domain/entities/user.dart';
 import 'package:journey_share/injection_container.dart';
 import 'package:journey_share/presentation/bloc/auth/auth.bloc.dart';
 import 'package:journey_share/presentation/bloc/auth/auth.events.dart';
 import 'package:journey_share/presentation/bloc/auth/auth.state.dart';
 import 'package:journey_share/presentation/bloc/post/post.bloc.dart';
 import 'package:journey_share/presentation/bloc/post/post.events.dart';
+import 'package:journey_share/presentation/bloc/post/post.state.dart';
 import 'package:journey_share/presentation/bloc/user/user.bloc.dart';
 import 'package:journey_share/presentation/bloc/user/user.event.dart';
 import 'package:journey_share/presentation/bloc/user/user.state.dart';
-
-import '../../../bloc/post/post.state.dart';
 
 class ProfileScreen extends StatelessWidget {
   final String? userId;
@@ -21,64 +21,63 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext wContext) {
     final meUser =
         (BlocProvider.of<AuthBloc>(wContext).state as AuthenticatedState).user;
+    var userToShow = meUser;
     return BlocConsumer(
       bloc: sl<UserBloc>(),
       listener: (context, state) {
-        if (state is EmptyUserState) {
-          BlocProvider.of<UserBloc>(wContext).add(FetchUser(userId: userId!));
+        if (state is UserLoaded) {
+          userToShow = state.user;
         }
       },
       builder: (BuildContext context, state) {
         if (userId != null) {
+          print('userid: ' + userId!);
           BlocProvider.of<UserBloc>(wContext).add(FetchUser(userId: userId!));
+          if (state is UserLoaded) userToShow = state.user;
         }
-        if (state is EmptyUserState) {
-          return CircularProgressIndicator();
-        } else if (state is UserLoaded) {
-          return Column(
-            children: [
-              _profileIcon(),
-              _userName(state),
-              Container(
-                alignment: Alignment.center,
-                child: Row(
-                  children: [
-                    if (meUser == state.user)
-                      OutlinedButton(
-                        onPressed: () async {
-                          BlocProvider.of<AuthBloc>(context)
-                              .add(OnLogoutAttempt());
-                          await Navigator.of(context)
-                              .pushNamedAndRemoveUntil('/auth', (_) => false);
-                        },
-                        child: const Text('Logout'),
-                      ),
-                    if (meUser != state.user)
-                      OutlinedButton(
-                        onPressed: () async {
-                          BlocProvider.of<AuthBloc>(context)
-                              .add(OnLogoutAttempt());
-                          await Navigator.of(context)
-                              .pushNamedAndRemoveUntil('/auth', (_) => false);
-                        },
-                        child: const Text('Follow'),
-                      )
-                  ],
-                ),
+        return Column(
+          children: [
+            _profileIcon(),
+            _userName(userToShow),
+            Container(
+              alignment: Alignment.center,
+              child: Row(
+                children: [
+                  if (meUser == userToShow)
+                    OutlinedButton(
+                      onPressed: () async {
+                        BlocProvider.of<AuthBloc>(context)
+                            .add(OnLogoutAttempt());
+                        await Navigator.of(context)
+                            .pushNamedAndRemoveUntil('/auth', (_) => false);
+                      },
+                      child: const Text('Logout'),
+                    ),
+                  if (meUser != userToShow)
+                    OutlinedButton(
+                      onPressed: () async {
+                        BlocProvider.of<AuthBloc>(context)
+                            .add(OnLogoutAttempt());
+                        await Navigator.of(context)
+                            .pushNamedAndRemoveUntil('/auth', (_) => false);
+                      },
+                      child: const Text('Follow'),
+                    )
+                ],
               ),
-              _buildPostsGrid(state, context)
-            ],
-          );
-        } else {
-          return Text('Something went wrong!');
-        }
+            ),
+            _buildPostsGrid(userToShow, context)
+          ],
+        );
       },
     );
   }
 
-  SizedBox _buildPostsGrid(UserLoaded state, BuildContext context) {
-    BlocProvider.of<PostBloc>(context).add(OnLoadingUserPosts(state.user.id));
-    final posts = BlocProvider.of<PostBloc>(context).state as LoadedState;
+  SizedBox _buildPostsGrid(User user, BuildContext context) {
+    //print((BlocProvider.of<PostBloc>(context).state as PostErrorState).errorMessage);
+    BlocProvider.of<PostBloc>(context).add(OnLoadingUserPosts(user.id));
+    final posts =
+        BlocProvider.of<PostBloc>(context).state as LoadedUserPostsState;
     return SizedBox(
       height: 599,
       child: GridView(
@@ -99,8 +98,8 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Text _userName(state) {
-    return Text(state.user.userName.toString());
+  Text _userName(User user) {
+    return Text(user.userName.toString());
   }
 
   Padding _profileIcon() {

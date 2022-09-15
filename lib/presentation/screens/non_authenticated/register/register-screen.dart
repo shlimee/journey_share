@@ -60,7 +60,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         _registerButton(context),
                         _loginRedirectButton(context),
-                        if (appState is ErrorState &&
+                        if (appState is AuthErrorState &&
                             appState.errorMessage != null)
                           Align(
                             alignment: Alignment.centerRight,

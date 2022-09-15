@@ -23,7 +23,8 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       final postResult = await getPosts.call(NoParams());
       postResult.fold(
         (failure) {
-          emit(ErrorState(
+          print(failure.message);
+          emit(PostErrorState(
               errorCode: 414, errorMessage: failure.message.toString()));
         },
         (result) {
@@ -36,11 +37,12 @@ class PostBloc extends Bloc<PostEvent, PostState> {
           await getUserPosts.call(GetUserPostsParams(userId: event.userId));
       postResult.fold(
         (failure) {
-          emit(ErrorState(
+          emit(PostErrorState(
               errorCode: 414, errorMessage: failure.message.toString()));
         },
         (result) {
-          emit(LoadedState(fetchedPosts: result));
+          emit(
+              LoadedUserPostsState(fetchedPosts: result, userId: event.userId));
         },
       );
     });
