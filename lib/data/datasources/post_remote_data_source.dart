@@ -41,7 +41,6 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
     final body = {'description': description};
     final response = await (Api(apiUrl: "http://localhost:3333/")
         .postWithFile(endpoint: "api/post", body: body, file: file));
-    print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       return PostModel.fromJson(json.decode(response.body));
     } else {

@@ -1,12 +1,9 @@
 import 'dart:convert';
-import 'dart:math';
 
-import 'package:flutter/material.dart';
 import 'package:journey_share/data/api.dart';
 import 'package:journey_share/data/models/auth_model.dart';
 import 'package:journey_share/data/models/user_model.dart';
 import 'package:journey_share/domain/entities/token_entity.dart';
-import 'package:http/http.dart' as http;
 import 'package:journey_share/domain/entities/user.dart';
 
 import '../user_secure_storage.dart';
@@ -32,12 +29,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       endpoint: "auth/login",
       body: {'userName': userName, 'password': password},
     );
-    print('resp:' + response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       final tokenModel = TokenModel.fromJson(json.decode(response.body));
       await UserSecureStorage.setValue('token', tokenModel.accessToken);
       final user = await parseToken(tokenModel);
-      print('user: $user');
       return user;
     } else {
       final error = jsonDecode(response.body);
@@ -50,7 +45,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     final _token = await UserSecureStorage.getValue('token');
 
     final response = await api.get(endpoint: 'user/me', accessToken: _token);
-    print(response.body);
 
     final userModel = UserModel.fromJson(json.decode(response.body));
     return userModel;

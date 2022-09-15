@@ -46,13 +46,10 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     });
     on<OnLoaded>((event, emit) {});
     on<OnCreate>((event, emit) async {
-      print(event);
       emit(CreateState(imageFile: event.fileToUpload));
     });
     on<OnPublish>((event, emit) async {
       final res = await _publish(event);
-      print(res.toString());
-      print('published');
     });
   }
 

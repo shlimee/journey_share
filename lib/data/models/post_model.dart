@@ -14,7 +14,6 @@ class PostModel extends Post {
             url: url);
 
   factory PostModel.fromJson(Map<String, dynamic> json) {
-    print("json? " + json.toString());
     return PostModel(
       user: UserModel.fromJson(json['user']),
       url: json['url'],

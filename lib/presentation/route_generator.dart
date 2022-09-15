@@ -18,7 +18,6 @@ class RouteGenerator {
         return MaterialPageRoute(
             builder: (_) => ScreenWrapper(child: RootScreen()));
       case '/profile':
-        print("settings: " + params!.arg.toString());
         return MaterialPageRoute(
             builder: (_) => ScreenWrapper(
                     child: ProfileScreen(

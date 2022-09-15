@@ -121,7 +121,5 @@ class FeedPost extends StatelessWidget {
     );
   }
 
-  void _doubleTappedImage() {
-    print("syes");
-  }
+  void _doubleTappedImage() {}
 }

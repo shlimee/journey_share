@@ -13,11 +13,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         final result = await getUser(GetUserParams(userId: event.userId));
 
         return result.fold((l) {
-          print(l.toString());
           return const UserError(
               errorCode: 414, errorMessage: 'error fetching user!');
         }, (r) {
-          print('user loaded');
           emit(UserLoaded(user: r));
         });
       },

@@ -1,17 +1,8 @@
-import 'dart:convert';
-import 'dart:math';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart';
 import 'package:journey_share/core/usecase.dart';
-import 'package:journey_share/domain/entities/token_entity.dart';
 import 'package:journey_share/domain/usecases/logout.dart';
-import 'dart:async';
-
 import 'package:journey_share/presentation/bloc/auth/auth.events.dart';
 import 'package:journey_share/presentation/bloc/auth/auth.state.dart';
-import 'package:meta/meta.dart';
 
 import '../../../domain/usecases/login.dart';
 
@@ -42,7 +33,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             errorCode: 414, errorMessage: failure.message.toString()));
       },
       (user) {
-        print("successfully logged in: " + user.toString());
         emit(AuthenticatedState(user: user));
       },
     );
@@ -57,7 +47,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             errorCode: 414, errorMessage: failure.message.toString()));
       },
       (res) {
-        print("successfully logged out: " + res.toString());
         emit(NonAuthenticatedState());
       },
     );
