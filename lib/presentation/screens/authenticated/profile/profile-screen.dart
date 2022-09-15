@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:journey_share/injection_container.dart';
 import 'package:journey_share/presentation/bloc/auth/auth.bloc.dart';
 import 'package:journey_share/presentation/bloc/auth/auth.events.dart';
+import 'package:journey_share/presentation/bloc/auth/auth.state.dart';
 import 'package:journey_share/presentation/bloc/post/post.bloc.dart';
 import 'package:journey_share/presentation/bloc/post/post.events.dart';
 import 'package:journey_share/presentation/bloc/user/user.bloc.dart';
@@ -18,6 +19,8 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext wContext) {
+    final meUser =
+        (BlocProvider.of<AuthBloc>(wContext).state as AuthenticatedState).user;
     return BlocConsumer(
       bloc: sl<UserBloc>(),
       listener: (context, state) {
@@ -36,13 +39,32 @@ class ProfileScreen extends StatelessWidget {
             children: [
               _profileIcon(),
               _userName(state),
-              OutlinedButton(
-                onPressed: () async {
-                  BlocProvider.of<AuthBloc>(context).add(OnLogoutAttempt());
-                  await Navigator.of(context)
-                      .pushNamedAndRemoveUntil('/auth', (_) => false);
-                },
-                child: const Text('Logout'),
+              Container(
+                alignment: Alignment.center,
+                child: Row(
+                  children: [
+                    if (meUser == state.user)
+                      OutlinedButton(
+                        onPressed: () async {
+                          BlocProvider.of<AuthBloc>(context)
+                              .add(OnLogoutAttempt());
+                          await Navigator.of(context)
+                              .pushNamedAndRemoveUntil('/auth', (_) => false);
+                        },
+                        child: const Text('Logout'),
+                      ),
+                    if (meUser != state.user)
+                      OutlinedButton(
+                        onPressed: () async {
+                          BlocProvider.of<AuthBloc>(context)
+                              .add(OnLogoutAttempt());
+                          await Navigator.of(context)
+                              .pushNamedAndRemoveUntil('/auth', (_) => false);
+                        },
+                        child: const Text('Follow'),
+                      )
+                  ],
+                ),
               ),
               _buildPostsGrid(state, context)
             ],

@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'JourneyShare',
         theme: ThemeData(
-          primarySwatch: Colors.green,
+          primarySwatch: Colors.blue,
         ),
         initialRoute: '/auth',
         onGenerateRoute: RouteGenerator.generateRoute,

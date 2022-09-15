@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:journey_share/core/error/auth_failures.dart';
 import 'package:journey_share/core/error/failures.dart';
 import 'package:journey_share/data/datasources/auth_remote_data_source.dart';
-import 'package:journey_share/domain/entities/token_entity.dart';
 import 'package:journey_share/domain/entities/user.dart';
 import 'package:journey_share/domain/repositories/auth_repository.dart';
 

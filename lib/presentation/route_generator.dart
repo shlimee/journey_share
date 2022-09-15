@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:journey_share/presentation/screens/authenticated/profile/profile-screen.dart';
+import 'package:journey_share/presentation/screens/authenticated/search/search-screen.dart';
 import 'package:journey_share/presentation/screens/authenticated/upload/screens/add_details_screen.dart';
 import 'package:journey_share/presentation/screens/non_authenticated/login/login-screen.dart';
 import 'package:journey_share/presentation/screens/root_screen.dart';
@@ -17,6 +18,9 @@ class RouteGenerator {
       case '/feed':
         return MaterialPageRoute(
             builder: (_) => ScreenWrapper(child: RootScreen()));
+      case '/search':
+        return MaterialPageRoute(
+            builder: (_) => ScreenWrapper(child: SearchScreen()));
       case '/profile':
         return MaterialPageRoute(
             builder: (_) => ScreenWrapper(

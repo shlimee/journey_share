@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:journey_share/presentation/bloc/bottom_nav/bottom_nav_cubit.dart';
 import 'package:journey_share/presentation/screens/authenticated/feed/feed-screen.dart';
+import 'package:journey_share/presentation/screens/authenticated/search/search-screen.dart';
 import 'package:journey_share/presentation/screens/authenticated/upload/upload_content_screen.dart';
 import 'package:journey_share/presentation/widgets/buttom_navbar.dart';
 
@@ -12,6 +13,7 @@ class RootScreen extends StatelessWidget {
 
   final List<Widget> _screens = [
     UploadContentScreen(),
+    SearchScreen(),
     FeedScreen(),
     ProfileScreen(),
   ];

@@ -7,6 +7,7 @@ class BottomNavBar extends StatelessWidget {
 
   final List<BottomNavigationBarItem> navBarItems = [
     const BottomNavigationBarItem(label: 'Upload', icon: Icon(Icons.add)),
+    const BottomNavigationBarItem(label: 'Search', icon: Icon(Icons.search)),
     const BottomNavigationBarItem(label: 'Feed', icon: Icon(Icons.home)),
     const BottomNavigationBarItem(label: 'Account', icon: Icon(Icons.person)),
   ];
@@ -17,6 +18,10 @@ class BottomNavBar extends StatelessWidget {
         builder: ((context, state) => BottomNavigationBar(
             items: navBarItems,
             currentIndex: state,
+            selectedItemColor: Colors.black,
+            unselectedItemColor: Colors.black54,
+            landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
+            type: BottomNavigationBarType.fixed,
             onTap: (index) {
               context.read<BottomNavCubit>().updateIndex(index);
             })));
