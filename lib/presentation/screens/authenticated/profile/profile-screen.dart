@@ -73,28 +73,39 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  SizedBox _buildPostsGrid(User user, BuildContext context) {
+  BlocConsumer _buildPostsGrid(User user, BuildContext wcontext) {
     //print((BlocProvider.of<PostBloc>(context).state as PostErrorState).errorMessage);
-    BlocProvider.of<PostBloc>(context).add(OnLoadingUserPosts(user.id));
-    final posts =
-        BlocProvider.of<PostBloc>(context).state as LoadedUserPostsState;
-    return SizedBox(
-      height: 599,
-      child: GridView(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          childAspectRatio: 1,
-          crossAxisSpacing: 4,
-        ),
-        children: [
-          for (var i in posts.fetchedPosts)
-            Image.network(
-              i.url,
-              height: 444,
-              fit: BoxFit.cover,
-            )
-        ],
-      ),
+    BlocProvider.of<PostBloc>(wcontext).add(OnLoadingUserPosts(user.id));
+    return BlocConsumer(
+      bloc: sl<PostBloc>(),
+      builder: (context, state) {
+        if (state is LoadedUserPostsState) {
+          return SizedBox(
+            height: 599,
+            child: GridView(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                childAspectRatio: 1,
+                crossAxisSpacing: 4,
+              ),
+              children: [
+                for (var i in state.fetchedPosts)
+                  Image.network(
+                    i.url,
+                    height: 444,
+                    fit: BoxFit.cover,
+                  )
+              ],
+            ),
+          );
+        } else {
+          return Text('asd');
+        }
+      },
+      listener: (context, state) {
+        print(state);
+        return BlocProvider.of<PostBloc>(wcontext).add(OnLoadingUserPosts(user.id));
+      },
     );
   }
 

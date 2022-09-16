@@ -37,6 +37,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
           await getUserPosts.call(GetUserPostsParams(userId: event.userId));
       postResult.fold(
         (failure) {
+          print(failure.message.toString());
           emit(PostErrorState(
               errorCode: 414, errorMessage: failure.message.toString()));
         },

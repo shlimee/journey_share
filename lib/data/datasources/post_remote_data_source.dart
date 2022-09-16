@@ -58,6 +58,7 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       var mappedResponse = responseBodyArray.map<PostModel>((e) {
+        print(e);
         return PostModel.fromJson(e);
       }).toList();
       return mappedResponse as List<Post>;

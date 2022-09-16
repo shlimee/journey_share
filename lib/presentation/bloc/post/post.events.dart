@@ -2,7 +2,11 @@ import 'dart:io';
 
 import 'package:journey_share/presentation/bloc/events.dart';
 
-class PostEvent extends AppEvent {}
+class PostEvent extends AppEvent {
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+}
 
 class OnLoadingAllPosts extends PostEvent {}
 
@@ -10,6 +14,9 @@ class OnLoadingUserPosts extends PostEvent {
   final String userId;
 
   OnLoadingUserPosts(this.userId);
+
+  @override
+  List<Object?> get props => [userId];
 }
 
 class OnLoaded extends PostEvent {}
