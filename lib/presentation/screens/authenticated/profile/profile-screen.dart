@@ -80,13 +80,13 @@ class ProfileScreen extends StatelessWidget {
       bloc: sl<PostBloc>(),
       builder: (context, state) {
         if (state is LoadedUserPostsState) {
-          return SizedBox(
-            height: 599,
+          print("possssssssts: " + state.fetchedPosts.toString());
+          return Expanded(
             child: GridView(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 childAspectRatio: 1,
-                crossAxisSpacing: 4,
+                crossAxisSpacing: 1,
               ),
               children: [
                 for (var i in state.fetchedPosts)
@@ -104,7 +104,6 @@ class ProfileScreen extends StatelessWidget {
       },
       listener: (context, state) {
         print(state);
-        return BlocProvider.of<PostBloc>(wcontext).add(OnLoadingUserPosts(user.id));
       },
     );
   }

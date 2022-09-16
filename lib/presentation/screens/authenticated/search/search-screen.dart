@@ -16,14 +16,21 @@ class SearchScreen extends StatelessWidget {
           Container(
               alignment: Alignment.center,
               child: Text(
-                'Search',
+                'Search for a place to visit or a friend',
                 style: TextStyles.titleFaded,
               )),
           Center(
-            child: TextFormField(style: TextStyles.title),
+            child: TextFormField(
+              style: TextStyles.title,
+              onChanged: (value) => onSearchFieldChanged(value),
+            ),
           ),
         ],
       ),
     );
+  }
+
+  onSearchFieldChanged(String value) {
+    if (value.length < 3) return;
   }
 }
