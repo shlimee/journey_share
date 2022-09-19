@@ -30,4 +30,14 @@ class UserRepositoryImpl implements UserRepository {
       return Left(SearchFailure(message: e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> follow(String userId) async {
+    try {
+      final remote = await remoteDataSource.follow(userId);
+      return Right(remote);
+    } catch (e) {
+      return Left(SearchFailure(message: e.toString()));
+    }
+  }
 }

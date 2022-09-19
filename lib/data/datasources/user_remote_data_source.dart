@@ -8,6 +8,8 @@ import '../models/user_model.dart';
 abstract class UserRemoteDataSource {
   Future<User> getUser(String userId);
   Future<List<User>> search(String searchText);
+
+  Future<bool> follow(String userId);
 }
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
@@ -50,6 +52,22 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
         return UserModel.fromJson(e);
       }).toList();
       return mappedResponse as List<User>;
+    } else {
+      final error = jsonDecode(response.body);
+      throw Exception(error["message"].toString());
+    }
+  }
+
+  @override
+  Future<bool> follow(String userId) async {
+    final response = await api.post(
+      endpoint: "user/follow/$userId",
+    );
+
+    var responseBody = json.decode(response.body);
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return responseBody;
     } else {
       final error = jsonDecode(response.body);
       throw Exception(error["message"].toString());

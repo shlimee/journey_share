@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:journey_share/domain/entities/post.dart';
+import 'package:journey_share/presentation/screens/authenticated/feed/widgets/feed-post.dart';
 import 'package:journey_share/presentation/screens/authenticated/profile/profile-screen.dart';
 import 'package:journey_share/presentation/screens/authenticated/search/search-screen.dart';
 import 'package:journey_share/presentation/screens/authenticated/upload/screens/add_details_screen.dart';
@@ -18,6 +20,15 @@ class RouteGenerator {
       case '/feed':
         return MaterialPageRoute(
             builder: (_) => ScreenWrapper(child: RootScreen()));
+      case '/feed/post':
+        final param = settings.arguments as RouteParam<Post>;
+        return MaterialPageRoute(
+            builder: (_) => ScreenWrapper(
+                    child: FeedPost(
+                  description: param.arg.description,
+                  user: param.arg.user,
+                  url: param.arg.url,
+                )));
       case '/search':
         return MaterialPageRoute(
             builder: (_) => ScreenWrapper(child: SearchScreen()));

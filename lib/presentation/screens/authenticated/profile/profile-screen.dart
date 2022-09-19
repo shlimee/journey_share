@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:journey_share/domain/entities/post.dart';
 import 'package:journey_share/domain/entities/user.dart';
 import 'package:journey_share/injection_container.dart';
 import 'package:journey_share/presentation/bloc/auth/auth.bloc.dart';
@@ -11,6 +12,7 @@ import 'package:journey_share/presentation/bloc/post/post.state.dart';
 import 'package:journey_share/presentation/bloc/user/user.bloc.dart';
 import 'package:journey_share/presentation/bloc/user/user.event.dart';
 import 'package:journey_share/presentation/bloc/user/user.state.dart';
+import 'package:journey_share/presentation/screens/route_params.dart';
 
 class ProfileScreen extends StatelessWidget {
   final String? userId;
@@ -90,10 +92,16 @@ class ProfileScreen extends StatelessWidget {
               ),
               children: [
                 for (var i in state.fetchedPosts)
-                  Image.network(
-                    i.url,
-                    height: 444,
-                    fit: BoxFit.cover,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/feed/post',
+                          arguments: RouteParam<Post>(arg: i));
+                    },
+                    child: Image.network(
+                      i.url,
+                      height: 444,
+                      fit: BoxFit.cover,
+                    ),
                   )
               ],
             ),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:journey_share/domain/entities/post.dart';
 import 'package:journey_share/injection_container.dart';
 import 'package:journey_share/presentation/bloc/search/search.bloc.dart';
 import 'package:journey_share/presentation/bloc/search/search.events.dart';
+import 'package:journey_share/presentation/screens/route_params.dart';
 import 'package:journey_share/style/text.styles.dart';
 
 import '../../../bloc/search/search.states.dart';
@@ -46,10 +48,16 @@ class SearchScreen extends StatelessWidget {
                       ),
                       children: [
                         for (var i in state.posts)
-                          Image.network(
-                            i.url,
-                            height: 444,
-                            fit: BoxFit.cover,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushNamed('/feed/post',
+                                  arguments: RouteParam<Post>(arg: i));
+                            },
+                            child: Image.network(
+                              i.url,
+                              height: 444,
+                              fit: BoxFit.cover,
+                            ),
                           )
                       ],
                     ),
