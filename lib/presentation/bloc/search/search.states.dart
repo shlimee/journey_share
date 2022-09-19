@@ -18,4 +18,9 @@ class SearchedState extends SearchState {
   List<Object?> get props => [users, posts];
 }
 
-class SearchErrorState extends SearchState {}
+class SearchErrorState extends SearchState {
+  final int? errorCode;
+  final String? errorMessage;
+
+  SearchErrorState({this.errorCode, this.errorMessage});
+}

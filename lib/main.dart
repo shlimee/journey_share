@@ -4,6 +4,7 @@ import 'package:journey_share/enviroment.dart';
 import 'package:journey_share/injection_container.dart';
 import 'package:journey_share/presentation/bloc/auth/auth.bloc.dart';
 import 'package:journey_share/presentation/bloc/post/post.bloc.dart';
+import 'package:journey_share/presentation/bloc/search/search.bloc.dart';
 import 'package:journey_share/presentation/bloc/user/user.bloc.dart';
 import 'package:journey_share/presentation/route_generator.dart';
 import 'package:journey_share/presentation/services/navigation_service.dart';
@@ -35,6 +36,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<UserBloc>(
           create: (_) => sl<UserBloc>(),
+        ),
+        BlocProvider<SearchBloc>(
+          create: (_) => sl<SearchBloc>(),
         ),
       ],
       child: MaterialApp(

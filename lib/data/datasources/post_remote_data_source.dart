@@ -9,6 +9,7 @@ abstract class PostRemoteDataSource {
   Future<List<Post>> getAll();
   Future<Post> publish(File file, String description);
   Future<List<Post>> getUserPosts(String userId);
+  Future<List<Post>> search(String searchText);
 }
 
 class PostRemoteDataSourceImpl implements PostRemoteDataSource {
@@ -53,6 +54,28 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
   Future<List<Post>> getUserPosts(String userId) async {
     final response = await (Api(apiUrl: "http://localhost:3333/")
         .get(endpoint: "api/post/user/" + userId));
+
+    var responseBodyArray = json.decode(response.body);
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      var mappedResponse = responseBodyArray.map<PostModel>((e) {
+        print(e);
+        return PostModel.fromJson(e);
+      }).toList();
+      return mappedResponse as List<Post>;
+    } else {
+      final error = jsonDecode(response.body);
+      throw Exception(error["message"].toString());
+    }
+  }
+
+  Future<List<Post>> search(String searchText) async {
+    final response = await api.get(
+      endpoint: "post/search",
+      queryParameters: {
+        'searchQuery': searchText,
+      },
+    );
 
     var responseBodyArray = json.decode(response.body);
 

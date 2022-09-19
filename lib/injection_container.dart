@@ -15,9 +15,11 @@ import 'package:journey_share/domain/usecases/get_user_posts.dart';
 import 'package:journey_share/domain/usecases/login.dart';
 import 'package:journey_share/domain/usecases/logout.dart';
 import 'package:journey_share/domain/usecases/publish.dart';
+import 'package:journey_share/domain/usecases/search.dart';
 import 'package:journey_share/enviroment.dart';
 import 'package:journey_share/presentation/bloc/auth/auth.bloc.dart';
 import 'package:journey_share/presentation/bloc/post/post.bloc.dart';
+import 'package:journey_share/presentation/bloc/search/search.bloc.dart';
 import 'package:journey_share/presentation/bloc/user/user.bloc.dart';
 import 'package:journey_share/presentation/services/navigation_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,10 +34,17 @@ Future<void> init() async {
     () => AuthBloc(login: sl(), logout: sl()),
   );
   sl.registerLazySingleton(
-    () => PostBloc(getPosts: sl(), publish: sl(), getUserPosts: sl(),),
+    () => PostBloc(
+      getPosts: sl(),
+      publish: sl(),
+      getUserPosts: sl(),
+    ),
   );
   sl.registerLazySingleton(
     () => UserBloc(getUser: sl()),
+  );
+  sl.registerLazySingleton(
+    () => SearchBloc(search: sl()),
   );
 
   // Use cases
@@ -45,6 +54,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => Publish(sl()));
   sl.registerLazySingleton(() => GetUser(sl()));
   sl.registerLazySingleton(() => GetUserPosts(sl()));
+  sl.registerLazySingleton(() => Search(sl(), sl()));
 
   // Repository
   sl.registerLazySingleton<AuthRepository>(
